@@ -23,6 +23,56 @@ head(data,5)
 
 ##1. Análisis comparativo por meses, sexo y estados civil del número de fallecidos
 
+#Meses
+meses = c("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
+#numero de fallecidos por meses
+fallxmes=data %>%
+  group_by(mes_fall)%>%filter(mes_fall %in% meses) %>% 
+  summarise(Total = n())
+
+
+#numero de fallecidos por sexo
+fallxsex=data %>%
+  group_by(sexo)%>%filter(sexo %in% c("Hombre","Mujer")) %>%   #Para asi poder evitar valores mal tipeados
+  summarise(Total = n())
+
+
+#numero de fallecidos por estado civil    est_civil
+estcivil = data %>% filter(est_civil != " ")
+fallxest=estcivil %>% 
+  group_by(est_civil) %>% 
+  summarise(Total = n())
+
+
+
+##Datos cualitativos
+#MESES VS NUM. FALLECIDOS
+table(data$mes_fall)
+barplot(table(data$mes_fall))
+barplot(table(data$mes_fall), xlab="MESES", main = "MESES VS NUM. FALLECIDOS", col=c("lightblue","Pink") )
+
+tablaR1=cbind(Abosulta=table(data$mes_fall), Relativa=prop.table(table(data$mes_fall)))
+
+
+tabla#SEXO VS NUM. NUM.FALLECIDOS 
+table(data$sexo)
+barplot(table(data$sexo))
+barplot(table(data$sexo), legend.text = TRUE, xlab="SEXO", main = "SEXO VS NUM. FALLECIDOS", col=c("lightblue","Pink") )
+
+tablaR2=cbind(Abosulta=table(data$sexo), Relativa=prop.table(table(data$sexo)))
+
+
+#ESTD.CIVIL VS NUM.FALLECIDS
+table(estcivil$est_civil)
+barplot(table(estcivil$est_civil))
+barplot(table(estcivil$est_civil), legend.text = TRUE, xlab="SEXO", main = "SEXO VS NUM. FALLECIDOS", col=c("lightblue","Pink") )
+
+tablaR3=cbind(Abosulta=table(estcivil$est_civil), Relativa=prop.table(table(estcivil$est_civil))) 
+
+
+
+
+
 
 ##2. Resumen de las 10 mayores causas de muerte de manera general y por sexo.
 
